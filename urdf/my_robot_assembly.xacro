@@ -7,12 +7,6 @@
     
     <!-- importing the template for the robot wheels -->
     <xacro:include filename="$(find my_robot_description)/urdf/my_wheel.xacro"/>
-    
-    <!-- Wheel Creating using macros -->
-    <xacro:wheel name="rear_right"  x="0.250" y ="0.40" file_path="package://my_mobile_robot/meshes/right_tire.stl" />
-    <xacro:wheel name="front_right" x="-0.250" y ="0.40" file_path="package://my_mobile_robot/meshes/right_tire.stl" />
-    <xacro:wheel name="front_left"  x="-0.250" y ="-0.40" file_path="package://my_mobile_robot/meshes/left_tire.stl" />
-    <xacro:wheel name="rear_left"   x="0.250" y ="-0.40" file_path="package://my_mobile_robot/meshes/left_tire.stl" />
 
     <!-- Macros for importing the lidar -->
     <xacro:include filename="$(find my_robot_description)/urdf/lidar_sensor.xacro"/>

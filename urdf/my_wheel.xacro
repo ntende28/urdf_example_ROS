@@ -64,6 +64,41 @@
 
     </xacro:macro>
 
+    <!-- Creating wheels using macros template -->
+    <xacro:wheel name="rear_right"  x="0.250" y ="0.40" file_path="package://my_mobile_robot/meshes/right_tire.stl" />
+    <xacro:wheel name="front_right" x="-0.250" y ="0.40" file_path="package://my_mobile_robot/meshes/right_tire.stl" />
+    <xacro:wheel name="front_left"  x="-0.250" y ="-0.40" file_path="package://my_mobile_robot/meshes/left_tire.stl" />
+    <xacro:wheel name="rear_left"   x="0.250" y ="-0.40" file_path="package://my_mobile_robot/meshes/left_tire.stl" />
+    <!-- wheel_${name}_joint -->
+
+
+    <!-- adding skid controller essential for teleop and navigation -->
+    <gazebo>
+        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+            <updateRate>100.0</updateRate>
+            <robotNamespace>/</robotNamespace>
+            <leftFrontJoint>wheel_front_left_joint</leftFrontJoint>
+            <rightFrontJoint>wheel_front_right_joint</rightFrontJoint>
+            <leftRearJoint>wheel_rear_left_joint</leftRearJoint>
+            <rightRearJoint>wheel_rear_right_joint</rightRearJoint>
+            <wheelSeparation>0.8</wheelSeparation>
+            <wheelDiameter>${2 * wheel_radius}</wheelDiameter>
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+            <torque>50</torque>
+            <!-- for sending command messages (twist) -->
+            <topicName>cmd_vel</topicName>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <publishWheelTF>true</publishWheelTF>
+            <publishOdom>true</publishOdom>
+            <publishWheelJointState>true</publishWheelJointState>
+            <broadcastTF>false</broadcastTF>
+            <covariance_x>0.0001</covariance_x>
+            <covariance_y>0.0001</covariance_y>
+            <covariance_yaw>0.01</covariance_yaw>
+        </plugin>
+    </gazebo>
+
 </robot>
 
 

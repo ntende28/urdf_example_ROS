@@ -78,7 +78,7 @@
     <sensor type="ray" name="hokuyo_lidar_sensor">
       <always_on>true</always_on>
       <pose relative_to="hokuyo_lidar">0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>20</update_rate>
       <ray>
         <scan>
