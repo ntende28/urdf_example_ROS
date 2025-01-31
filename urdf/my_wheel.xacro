@@ -23,7 +23,8 @@
             <inertia ixx="${I_wheel}" ixy="0.0" ixz="0.0" iyy="${I_wheel}" iyz="0.0" izz="${Iz_wheel}"/>
         </inertial>
     </xacro:macro>
-
+    
+    <!-- </xacro:property> -->
 <!-- creating a xacro macro for the template of the wheels -->
     <xacro:macro name="wheel" params="name x y file_path">
         <link name="wheel_${name}_link">
@@ -98,6 +99,34 @@
             <covariance_yaw>0.01</covariance_yaw>
         </plugin>
     </gazebo>
+
+    <xacro:macro name="transmission_macro" params="name joint_name actuator_name">
+        <transmission name="${name}" >
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${actuator_name}">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <!-- creating the transmissions for each joint  -->
+    <xacro:transmission_macro name="rear_right_transmission" joint_name="wheel_rear_right_joint" actuator_name="dc_motor_rr" />
+    <xacro:transmission_macro name="rear_left_transmission" joint_name="wheel_rear_left_joint" actuator_name="dc_motor_ll" />
+    <xacro:transmission_macro name="front_right_transmission" joint_name="wheel_front_right_joint" actuator_name="dc_motor_fr" />
+    <xacro:transmission_macro name="front_left_transmission" joint_name="wheel_front_left_joint" actuator_name="dc_motor_fl" />
+    
+    <!-- adding the ros control plugin: It creates a communication between the comand from a controller
+    to the joints -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/my_robot</robotNamespace>
+        </plugin>
+    </gazebo>
+
 
 </robot>
 
